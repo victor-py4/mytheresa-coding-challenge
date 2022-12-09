@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Src\BoundedContext\Product\Domain\Service;
+namespace Src\BoundedContext\Product\Domain\Services;
 
 use Src\BoundedContext\Product\Domain\Converter\ProductConverter;
 use Src\BoundedContext\Product\Domain\Resource\ProductResponseResource;

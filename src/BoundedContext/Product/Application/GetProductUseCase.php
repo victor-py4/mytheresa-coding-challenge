@@ -7,8 +7,8 @@ namespace Src\BoundedContext\Product\Application;
 use Src\BoundedContext\Product\Domain\Contracts\ProductRepositoryContract;
 use Src\BoundedContext\Product\Domain\Converter\ProductConverter;
 use Src\BoundedContext\Product\Domain\Resource\ProductResponseResource;
-use Src\BoundedContext\Product\Domain\Service\GetProductPriceService;
-use Src\BoundedContext\Product\Domain\Service\GetProductService;
+use Src\BoundedContext\Product\Domain\Services\GetProductPriceService;
+use Src\BoundedContext\Product\Domain\Services\GetProductService;
 use Src\BoundedContext\Product\Domain\ValueObjects\ProductId;
 
 final class GetProductUseCase

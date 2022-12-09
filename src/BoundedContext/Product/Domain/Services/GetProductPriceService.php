@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Src\BoundedContext\Product\Domain\Service;
+namespace Src\BoundedContext\Product\Domain\Services;
 
 use Src\BoundedContext\Category\Infrastructure\Repositories\EloquentCategoryRepository;
 use Src\BoundedContext\Discount\Infrastructure\Repositories\EloquentDiscountRepository;

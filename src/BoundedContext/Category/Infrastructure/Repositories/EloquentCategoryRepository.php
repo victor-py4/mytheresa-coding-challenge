@@ -12,7 +12,7 @@ use Src\BoundedContext\Category\Domain\ValueObjects\CategoryName;
 use Src\BoundedContext\Discount\Domain\ValueObjects\DiscountId;
 
 
-final class EloquentCategoryRepository implements CategoryRepositoryContract
+class EloquentCategoryRepository implements CategoryRepositoryContract
 {
     /**
      * @var \App\Models\Category

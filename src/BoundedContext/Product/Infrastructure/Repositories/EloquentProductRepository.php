@@ -5,6 +5,7 @@
     namespace Src\BoundedContext\Product\Infrastructure\Repositories;
 
     use App\Models\Product as EloquentProductModel;
+    use Illuminate\Database\Eloquent\ModelNotFoundException;
     use Illuminate\Database\Query\Builder;
     use Illuminate\Pagination\Paginator;
     use Illuminate\Support\Facades\DB;
@@ -18,7 +19,7 @@
     use Src\BoundedContext\Product\Domain\ValueObjects\ProductPrice;
 
 
-    final class EloquentProductRepository implements ProductRepositoryContract
+    class EloquentProductRepository implements ProductRepositoryContract
     {
 
         /**
@@ -34,6 +35,13 @@
         public function find(ProductId $id): ?Product
         {
             $product = $this->eloquentProductModel->findOrFail($id->value());
+
+            if(is_null($product)) {
+                throw new ModelNotFoundException(
+                    "Product not found",
+                    404
+                );
+            }
 
             $categoryId = match ($product->category_id) {
                 null => null,
