@@ -15,19 +15,19 @@ class DiscountController extends BaseController
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
     /**
-     * @param Request $request
+     * @param Request            $request
      * @param GetDiscountUseCase $getDiscountUseCase
      *
      * @return JsonResponse
      */
     public function __invoke(
-        Request $request,
+        Request            $request,
         GetDiscountUseCase $getDiscountUseCase
     ): JsonResponse
     {
         $discountId = $request->route('discountId');
 
-        $responseResource = $getDiscountUseCase->execute((int) $discountId);
+        $responseResource = $getDiscountUseCase->execute((int)$discountId);
 
         return new JsonResponse($responseResource);
     }

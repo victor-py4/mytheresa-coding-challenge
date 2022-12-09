@@ -14,7 +14,7 @@ final class GetDiscountUseCase
 
     public function __construct(
         private DiscountRepositoryContract $repository,
-        private DiscountConverter $discountConverter
+        private DiscountConverter          $discountConverter
     )
     {
     }

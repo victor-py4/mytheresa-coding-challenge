@@ -18,7 +18,7 @@ class CategoryController extends Controller
 {
 
     /**
-     * @param Request                                                     $request
+     * @param Request            $request
      * @param GetCategoryUseCase $getCategoryUseCase
      *
      * @return JsonResponse

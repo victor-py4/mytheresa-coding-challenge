@@ -12,9 +12,9 @@ use Src\BoundedContext\Discount\Domain\ValueObjects\DiscountId;
 final class Category
 {
     public function __construct(
-        private CategoryId         $categoryId,
-        private ?DiscountId $discountId,
-        private CategoryName       $name,
+        private CategoryId   $categoryId,
+        private ?DiscountId  $discountId,
+        private CategoryName $name,
     )
     {
     }
@@ -36,9 +36,9 @@ final class Category
     }
 
     public static function create(
-        CategoryId         $categoryId,
-        ?DiscountId $discountId,
-        CategoryName       $name,
+        CategoryId   $categoryId,
+        ?DiscountId  $discountId,
+        CategoryName $name,
 
     ): Category
     {

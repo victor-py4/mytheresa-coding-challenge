@@ -5,6 +5,9 @@
     namespace Src\BoundedContext\Product\Infrastructure\Repositories;
 
     use App\Models\Product as EloquentProductModel;
+    use Illuminate\Database\Query\Builder;
+    use Illuminate\Pagination\Paginator;
+    use Illuminate\Support\Facades\DB;
     use Src\BoundedContext\Category\Domain\ValueObjects\CategoryId;
     use Src\BoundedContext\Discount\Domain\ValueObjects\DiscountId;
     use Src\BoundedContext\Product\Domain\Product;
@@ -17,6 +20,7 @@
 
     final class EloquentProductRepository implements ProductRepositoryContract
     {
+
         /**
          * @var \App\Models\Product
          */
@@ -49,5 +53,67 @@
                $discountId,
                new ProductPrice($product->price),
             );
+        }
+
+        /**
+         * @param \Illuminate\Database\Query\Builder $query
+         * @param string                             $categoryName
+         *
+         * @return \Src\BoundedContext\Product\Infrastructure\Repositories\EloquentProductRepository
+         */
+        private function findByCategory(Builder $query, string $categoryName): self
+        {
+            $query
+                ->join('categories', 'products.category_id', '=', 'categories.id')
+                ->where('categories.name', '=', $categoryName);
+
+            return $this;
+        }
+
+        /**
+         * @param Builder $query
+         * @param int     $price
+         *
+         * @return \Src\BoundedContext\Product\Infrastructure\Repositories\EloquentProductRepository
+         */
+        private function filterByPrice(Builder $query, int $price): self
+        {
+            $query
+                ->where('products.price', '<=', $price);
+
+            return $this;
+        }
+
+        /**
+         * @param array $params
+         *
+         * @return \Illuminate\Database\Query\Builder|null
+         */
+        private function searchByParamsQuery(array $params): ?Builder
+        {
+            $query = DB::table('products')
+                ->select('products.*');
+
+            if(array_key_exists('category', $params) && !is_null($params["category"])) {
+                $this->findByCategory($query, $params["category"]);
+            }
+
+            if(array_key_exists('priceFilter', $params) && !is_null($params["priceFilter"])) {
+                $this->filterByPrice($query, (int)$params["priceFilter"]);
+            }
+
+            return $query;
+        }
+
+        /**
+         * @param array $params
+         *
+         * @return Paginator
+         */
+        public function searchByParams(array $params): Paginator
+        {
+            $products = $this->searchByParamsQuery($params)->get()->all();
+
+            return new Paginator($products, 5);
         }
     }

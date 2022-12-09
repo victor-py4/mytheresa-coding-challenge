@@ -29,9 +29,9 @@ class CategoryConverter
         $categoryResponseResource->id = $category->id()->value();
         $categoryResponseResource->name = $category->name()->value();
 
-        if(!is_null($category->discountId())) {
+        if (!is_null($category->discountId())) {
             $discountId = new DiscountId($category->discountId()->value());
-            $discount =  $this->eloquentDiscountRepository->find($discountId);
+            $discount = $this->eloquentDiscountRepository->find($discountId);
             $discountResponseResource = new DiscountResponseResource();
             $discountResponseResource->discountId = $discount->discountId()->value();
             $discountResponseResource->percentage = $discount->percentage()->value();

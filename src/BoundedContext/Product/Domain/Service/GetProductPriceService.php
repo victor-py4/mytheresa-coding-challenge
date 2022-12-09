@@ -23,19 +23,19 @@ class GetProductPriceService
     {
         $discounts = [];
 
-        if(!is_null($product->categoryId())) {
+        if (!is_null($product->categoryId())) {
             $category = $this->categoryRepository->find($product->categoryId());
 
-            if(!is_null($category->discountId())) {
+            if (!is_null($category->discountId())) {
                 $discounts[] = $this->discountRepository->find($category->discountId())->percentage()->value();
             }
         }
 
-        if(!is_null($product->discountId())) {
+        if (!is_null($product->discountId())) {
             $discounts[] = $this->discountRepository->find($product->discountId())->percentage()->value();
         }
 
-        if(empty($discounts)) {
+        if (empty($discounts)) {
             $productPriceResponseResource = new ProductPriceResponseResource();
             $productPriceResponseResource->original = $product->price()->value();
             $productPriceResponseResource->final = $product->price()->value();
@@ -60,7 +60,8 @@ class GetProductPriceService
      *
      * @return float|int
      */
-    private function applyPriceDiscount(int $price, int $discount) {
+    private function applyPriceDiscount(int $price, int $discount)
+    {
         return ($price * (100 - $discount)) / 100;
     }
 }

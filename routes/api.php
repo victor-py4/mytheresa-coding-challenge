@@ -25,3 +25,4 @@ use Illuminate\Support\Facades\Route;
 Route::get('discount/{discountId}', DiscountController::class)->name('mytheresa.get-discount');
 Route::get('category/{categoryId}', CategoryController::class)->name('mytheresa.get-category');
 Route::get('product/{productId}', [ProductController::class, 'getProduct'])->name('mytheresa.get-product');
+Route::get('products', [ProductController::class, 'getProducts'])->name('mytheresa.get-products');
