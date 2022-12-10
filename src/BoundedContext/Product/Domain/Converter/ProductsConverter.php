@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Src\BoundedContext\Product\Domain\Converter;
 
-use Src\BoundedContext\Category\Infrastructure\Repositories\EloquentCategoryRepository;
 use Src\BoundedContext\Product\Domain\Resource\ProductResponseResource;
 use Src\BoundedContext\Product\Domain\Resource\ProductsResponseResource;
 
@@ -15,12 +14,6 @@ use Src\BoundedContext\Product\Domain\Resource\ProductsResponseResource;
  */
 class ProductsConverter
 {
-    public function __construct(
-        private EloquentCategoryRepository $eloquentCategoryRepository
-    )
-    {
-    }
-
     /**
      * @param ProductResponseResource[] $productsResponse
      *
