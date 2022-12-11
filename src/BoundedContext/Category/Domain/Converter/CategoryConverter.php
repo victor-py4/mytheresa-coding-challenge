@@ -33,7 +33,6 @@ class CategoryConverter
             $discountId = new DiscountId($category->discountId()->value());
             $discount = $this->eloquentDiscountRepository->find($discountId);
             $discountResponseResource = new DiscountResponseResource();
-            $discountResponseResource->discountId = $discount->discountId()->value();
             $discountResponseResource->percentage = $discount->percentage()->value();
             $categoryResponseResource->discount = $discountResponseResource;
         }
