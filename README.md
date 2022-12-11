@@ -1,66 +1,75 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+## About
+MyTheresa Coding Challenge is a project made with Laravel which uses Docker as an infrastructure to ensure it works in any machine.
+It implements a REST API endpoint that given a list of products, applies some discounts to them and can be filtered.
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+It uses **PHP 8.1.13** and **MYSQL 8.0**, each one has an individual Docker container connected to the same network.
 
-## About Laravel
+All the required information is set at the env.example, if you prefer to change the domain or the basic credentials feel free to change it before the setup.
+Also the project starts at the default ports, 80 and 3306, if you have any other services that uses these ports please stop the services or change it a **docker-compose.yml** file.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Requirements
+You'll need to have Docker and Docker Compose both installed and running to initialize the project.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+Fortunatelly Docker Dekstop is availabe for all systems and provides everything you need to run it.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+Here you have how to install it to different OS systems:
 
-## Learning Laravel
+- [Docker Desktop for Linux](https://docs.docker.com/desktop/install/linux-install/)
+- [Docker Desktop for Mac OS](https://docs.docker.com/desktop/install/mac-install/)
+- [Docker Desktop for Windows](https://docs.docker.com/desktop/install/windows-install/)
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+If you have already installed and running Docker, you need to ensure that your shell runs bash by default or you could execute bash scripts.
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+For windows users you should ensure that Windows Subsystem for Linux 2 (WSL2) is installed and enabled. 
+WSL allows you to run Linux binary files in Windows, if you need to install here's the [information how to install WSL](https://learn.microsoft.com/en-us/windows/wsl/install).
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+Before WSL installation you need to enable it for Docker. [Enable WSL for Docker Desktop](https://docs.docker.com/desktop/windows/wsl/)
 
-## Laravel Sponsors
+## Setup
+In this projects you will find some bash scripts that helps you run specific commands.
+> setup.sh // Initializes the project and installs everything you need
+> 
+> run_tests.sh // Runs the tests
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+Both of them are shell scripts, depending on your system you could execute them in different ways.
+To ensure you can run them, change the file permissions to be executed like this:
+```bash
+chmod +xr setup.sh
+```
+Now you have to execute **setup.sh** to setup the project.
+```
+bash setup.sh
+```
+This tiny script will:
+- Setup the environment.
+- Download and setup all the docker images.
+- Install composer dependencies if the project needs.
+- Run the DB migration with all the sctructure and data.
 
-### Premium Partners
+## Project
+This projects provides you three entities: **Product**, **Category** and **Discount**. Each one has it's endpoint to retrive individually the information.
+For example, if you need to get the first product information, you could use:
+```
+http://mytheresa-coding-challenge.test/api/product/1
+```
+And it will return a JSON with all the product information.
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+It works with all the entities, so you just need to replace the entity name with the other ones and also the ID to get another one.
+Here are some examples:
+```
+http://mytheresa-coding-challenge.test/api/product/3
+http://mytheresa-coding-challenge.test/api/category/2
+http://mytheresa-coding-challenge.test/api/discount/1
+```
 
-## Contributing
+Also there's another endpoint that retrieves all the products, filtered by category and optional by price 
+less than a price you provide (all the prices are in a min unit, multiplied by 100 to avoid float numbers).
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+It has two filters as described above as query parameters, **category** will return all the products filtered by category and **priceLessThan** will return all the products that have a lower or equal price you provided.
 
-## Code of Conduct
+You could combine them or use them individually, if you don't provide any of them it will return all the products.
+Here's an example:
+```
+http://mytheresa-coding-challenge.test/api/products?category=sandals&priceLessThan=80000
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
