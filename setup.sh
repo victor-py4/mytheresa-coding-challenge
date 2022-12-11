@@ -1,6 +1,6 @@
 #!/bin/sh
 ## Setup Environment
-echo "Initializing services"
+echo "Initializing Environment"
 cp .env.example .env
 ## Setup services
 echo "Initializing services"
